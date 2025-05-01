@@ -1,0 +1,59 @@
+<div class="p-4">
+    <p-card class="login-card">
+        <h6 class="text-lg">Entrar</h6>
+        <form class="flex flex-col" [formGroup]="formGroup">
+            <div class="my-8">
+                <p-floatlabel>
+                    <input
+                        pInputText
+                        class="w-full"
+                        id="email"
+                        type="email"
+                        formControlName="email"
+                        autocomplete="off"
+                    />
+                    <label for="email">Email</label>
+                </p-floatlabel>
+
+                @if(errorStateEmailRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar seu email
+                </p-message>
+                } @if(errorStateEmailInvalid.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >Email inválido
+                </p-message>
+                }
+            </div>
+
+            <div class="mb-8">
+                <p-floatlabel>
+                    <input
+                        pInputText
+                        class="w-full"
+                        id="password"
+                        type="password"
+                        formControlName="password"
+                        autocomplete="off"
+                    />
+                    <label for="password">Senha</label>
+                </p-floatlabel>
+
+                @if (errorStatePasswordRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar sua senha</p-message
+                >
+                }
+            </div>
+        </form>
+        <div class="flex flex-row justify-between">
+            <span class="text-sm recuperar-senha">Recuperar senha</span>
+
+            <p-button
+                [disabled]="disabledAccessBtn()"
+                label="Acessar"
+                (onClick)="doLogin()"
+            />
+        </div>
+    </p-card>
+</div>

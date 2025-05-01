@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@import './styles/page.css';
+@plugin "tailwindcss-primeui";
+
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html,
+body {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}

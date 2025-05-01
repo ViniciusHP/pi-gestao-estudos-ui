@@ -1,0 +1,25 @@
+.page-register-container {
+    height: 100%;
+}
+
+.page-container,
+.page-register-container {
+    width: 100%;
+    padding: 3rem 2.5rem 2.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.page-spinner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 1.8rem;
+}

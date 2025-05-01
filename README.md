@@ -54,3 +54,4 @@ Este projeto foi construído com as seguintes ferramentas/tecnologias:
 
 -   **[Angular](https://angular.io/)**
 -   **[PrimeNG](https://www.primefaces.org/primeng/)**
+-   **[Tailwind CSS](https://tailwindcss.com/)**
