@@ -1,0 +1,241 @@
+<div class="page-register-container">
+    <div class="relative">
+        @if(requestInProgress()) {
+        <app-page-spinner class="page-spinner" />
+        }
+
+        <app-page-title [title]="pageTitle()"> </app-page-title>
+
+        <form
+            class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+            [formGroup]="formGroup"
+        >
+            <div class="sm:col-span-3 xl:col-span-2">
+                <p-floatlabel>
+                    <input
+                        pInputText
+                        class="w-full"
+                        id="fullName"
+                        type="text"
+                        formControlName="fullName"
+                        autocomplete="off"
+                    />
+                    <label for="fullName">Nome completo</label>
+                </p-floatlabel>
+
+                @if (errorStateFullNameRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar o nome completo do usuário</p-message
+                >
+                }
+            </div>
+
+            <div class="sm:col-span-3 xl:col-span-2">
+                <p-floatlabel>
+                    <input
+                        pInputText
+                        class="w-full"
+                        id="username"
+                        type="text"
+                        formControlName="username"
+                        autocomplete="off"
+                    />
+                    <label for="username">Nome usuário</label>
+                </p-floatlabel>
+
+                @if (errorStateUsernameRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar o nome de usuário</p-message
+                >
+                }
+            </div>
+
+            <div class="sm:col-span-3 xl:col-span-2">
+                <p-floatlabel>
+                    <input
+                        pInputText
+                        class="w-full"
+                        id="email"
+                        type="email"
+                        formControlName="emailUnivesp"
+                        autocomplete="off"
+                    />
+                    <label for="email">Email Univesp</label>
+                </p-floatlabel>
+
+                @if (errorStateEmailRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar o email Univesp do usuário</p-message
+                >
+                } @if (errorStateEmailInvalid.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >Email informado é inválido</p-message
+                >
+                }
+            </div>
+
+            <div class="sm:col-span-3 xl:col-span-2">
+                <p-floatlabel>
+                    <input
+                        pInputText
+                        class="w-full"
+                        id="emailPrivate"
+                        type="email"
+                        formControlName="emailPrivate"
+                        autocomplete="off"
+                    />
+                    <label for="emailPrivate">Email particular</label>
+                </p-floatlabel>
+
+                @if (errorStateEmailPrivateRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar o email particular do
+                    usuário</p-message
+                >
+                } @if (errorStateEmailPrivateInvalid.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >Email informado é inválido</p-message
+                >
+                }
+            </div>
+
+            <div class="sm:col-span-3 lg:col-span-2 xl:col-span-1">
+                <p-floatlabel>
+                    <p-inputnumber
+                        id="ra"
+                        class="w-full"
+                        inputId="integeronly"
+                        formControlName="ra"
+                        styleClass="w-full"
+                        inputStyleClass="w-full"
+                    />
+                    <label for="ra">RA</label>
+                </p-floatlabel>
+
+                @if (errorStateRaRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar RA do usuário</p-message
+                >
+                }
+            </div>
+
+            <div class="sm:col-span-3 lg:col-span-2 xl:col-span-1">
+                <p-floatlabel>
+                    <input
+                        pInputText
+                        class="w-full"
+                        id="pole"
+                        type="text"
+                        formControlName="pole"
+                        autocomplete="off"
+                    />
+                    <label for="pole">Polo</label>
+                </p-floatlabel>
+
+                @if (errorStatePoleRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar o polo do usuário</p-message
+                >
+                }
+            </div>
+
+            <div class="sm:col-span-3 lg:col-span-2">
+                <p-floatlabel>
+                    <input
+                        pInputText
+                        class="w-full"
+                        id="course"
+                        type="text"
+                        formControlName="course"
+                        autocomplete="off"
+                    />
+                    <label for="course">Curso</label>
+                </p-floatlabel>
+
+                @if (errorStateCourseRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar o curso do usuário</p-message
+                >
+                }
+            </div>
+
+            <div class="sm:col-span-3 lg:col-span-2">
+                <p-floatlabel>
+                    <p-select
+                        inputId="userType"
+                        [options]="userTypes"
+                        optionLabel="name"
+                        optionValue="code"
+                        styleClass="w-full"
+                        [checkmark]="true"
+                        formControlName="userType"
+                    />
+                    <label for="userType">Tipo usuário</label>
+                </p-floatlabel>
+
+                @if (errorStateUserTypeRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar o tipo do usuário</p-message
+                >
+                }
+            </div>
+        </form>
+    </div>
+
+    <div class="flex justify-end items-end py-8 sm:pt-8 sm:pb-0 h-full">
+        @if (isInsertMode()) {
+        <div class="w-full sm:w-auto sm:grid sm:grid-cols-2 sm:gap-x-6">
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Incluir"
+                severity="primary"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="requestInProgress()"
+                [disabled]="disabledInsertBtn()"
+                (onClick)="newUser()"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Voltar"
+                severity="primary"
+                [outlined]="true"
+                styleClass="w-full sm:w-auto"
+                (onClick)="navigateToGrid()"
+            />
+        </div>
+        } @else {
+
+        <div class="w-full sm:w-auto sm:grid sm:grid-cols-3 sm:gap-x-6">
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Editar"
+                severity="primary"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="editRequest()"
+                [disabled]="disabledEditBtn()"
+                (onClick)="editUser()"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Excluir"
+                severity="danger"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="deleteRequest()"
+                [disabled]="disabledDeleteBtn()"
+                (onClick)="deleteUser($event)"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Voltar"
+                severity="primary"
+                [outlined]="true"
+                styleClass="w-full sm:w-auto"
+                (onClick)="navigateToGrid()"
+            />
+        </div>
+        }
+    </div>
+</div>
