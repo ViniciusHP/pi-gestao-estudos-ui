@@ -1,0 +1,60 @@
+<div class="page-container">
+    <app-page-title title="Disciplinas">
+        <ng-template #actions>
+            <a routerLink="new" class="p-button font-bold"> Novo </a>
+        </ng-template>
+    </app-page-title>
+
+    <p-table
+        [value]="subjects || []"
+        [paginator]="true"
+        [lazy]="true"
+        [loading]="requestInProgress()"
+        [rows]="paginatorState.rows"
+        [first]="paginatorState.first"
+        [totalRecords]="paginatorState.totalRecords"
+        [rowsPerPageOptions]="[paginatorState.initialNumberOfRows, 50, 100]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="{first} - {last} de {totalRecords}"
+        (onPage)="pageChange($event)"
+    >
+        <ng-template #header>
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-subject>
+            <tr>
+                <td>{{ subject.id }}</td>
+                <td>{{ subject.name }}</td>
+                <td>{{ subject.description }}</td>
+                <td>
+                    <div class="flex">
+                        <a
+                            [routerLink]="[subject.id]"
+                            class="block mr-1 p-button p-button-outlined font-medium"
+                        >
+                            Editar
+                        </a>
+                        <p-button
+                            class="ml-1"
+                            label="Excluir"
+                            severity="danger"
+                            [outlined]="true"
+                            (onClick)="delete(subject, $event)"
+                        />
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="4">Não existe nenhuma disciplina cadastrada.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
