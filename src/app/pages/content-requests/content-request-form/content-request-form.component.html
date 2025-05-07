@@ -1,0 +1,106 @@
+<div class="page-register-container">
+    <div class="relative">
+        @if(requestInProgress()) {
+        <app-page-spinner class="page-spinner" />
+        }
+        <app-page-title [title]="pageTitle()">
+            <ng-template #actions>
+                @if (!isInsertMode()) {
+                <div>
+                    <p-checkbox
+                        inputId="status"
+                        [binary]="true"
+                        [disabled]="requestInProgress()"
+                        [ngModel]="requestGranted"
+                        (ngModelChange)="handleStatusChange($event)"
+                    />
+                    <label for="status" class="ml-2"
+                        >Solicitação atendida</label
+                    >
+                </div>
+                }
+            </ng-template>
+        </app-page-title>
+
+        <form
+            class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3"
+            [formGroup]="formGroup"
+        >
+            <div class="sm:col-span-3 h-100">
+                <p-floatlabel class="h-full" [variant]="'over'">
+                    <textarea
+                        pTextarea
+                        class="w-full h-full p-filled"
+                        id="description"
+                        formControlName="description"
+                    >
+                    </textarea>
+                    <label for="description">Descrição</label>
+                </p-floatlabel>
+
+                @if (errorStateDescriptionRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar a descrição da solicitação</p-message
+                >
+                }
+            </div>
+        </form>
+    </div>
+
+    <div class="flex justify-end items-end py-8 sm:pt-8 sm:pb-0 h-full">
+        @if (isInsertMode()) {
+        <div class="w-full sm:w-auto sm:grid sm:grid-cols-2 sm:gap-x-6">
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Solicitar"
+                severity="primary"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="requestInProgress()"
+                [disabled]="disabledInsertBtn()"
+                (onClick)="insert()"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Voltar"
+                severity="primary"
+                [outlined]="true"
+                styleClass="w-full sm:w-auto"
+                (onClick)="navigateToGrid()"
+            />
+        </div>
+        } @else {
+
+        <div class="w-full sm:w-auto sm:grid sm:grid-cols-3 sm:gap-x-6">
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Editar"
+                severity="primary"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="editRequest()"
+                [disabled]="disabledEditBtn()"
+                (onClick)="edit()"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Excluir"
+                severity="danger"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="deleteRequest()"
+                [disabled]="disabledDeleteBtn()"
+                (onClick)="delete($event)"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Voltar"
+                severity="primary"
+                [outlined]="true"
+                styleClass="w-full sm:w-auto"
+                (onClick)="navigateToGrid()"
+            />
+        </div>
+        }
+    </div>
+</div>

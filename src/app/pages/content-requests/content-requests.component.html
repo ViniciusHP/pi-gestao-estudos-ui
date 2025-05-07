@@ -1,0 +1,65 @@
+<div class="page-container">
+    <app-page-title title="Solicitações">
+        <ng-template #actions>
+            <a routerLink="new" class="p-button font-bold"> Solicitar </a>
+        </ng-template>
+    </app-page-title>
+
+    <p-table
+        [loading]="requestInProgress()"
+        [value]="contentRequest || []"
+        [paginator]="true"
+        [lazy]="true"
+        [rows]="paginatorState.rows"
+        [first]="paginatorState.first"
+        [totalRecords]="paginatorState.totalRecords"
+        [rowsPerPageOptions]="[paginatorState.initialNumberOfRows, 50, 100]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="{first} - {last} de {totalRecords}"
+        (onPage)="pageChange($event)"
+    >
+        <ng-template #header>
+            <tr>
+                <th>Status</th>
+                <th>Descrição</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-contentRequest>
+            <tr>
+                <td>
+                    @if(contentRequest.status ==
+                    contentRequestStatusTypes.ATENDIDA) {
+                    <p-tag severity="success" value="Atendida" />
+                    } @else {
+                    <p-tag severity="warn" value="Aberta" />
+                    }
+                </td>
+                <td>{{ contentRequest.description }}</td>
+                <td>
+                    <div class="flex">
+                        <a
+                            [routerLink]="[contentRequest.id]"
+                            class="block mr-1 p-button p-button-outlined font-medium"
+                        >
+                            Editar
+                        </a>
+                        <p-button
+                            class="ml-1"
+                            label="Excluir"
+                            severity="danger"
+                            [outlined]="true"
+                            (onClick)="delete(contentRequest, $event)"
+                        />
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="4">Não existe nenhuma solicitação cadastrada.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
