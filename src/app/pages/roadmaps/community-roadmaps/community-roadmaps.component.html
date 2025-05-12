@@ -1,0 +1,27 @@
+<p-dataview
+    [value]="communityRoadmaps()"
+    [lazy]="true"
+    [loading]="requestInProgress()"
+    [paginator]="true"
+    [rows]="paginatorState.rows"
+    [first]="paginatorState.first"
+    [totalRecords]="paginatorState.totalRecords"
+    [rowsPerPageOptions]="[paginatorState.initialNumberOfRows, 50, 100]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} - {last} de {totalRecords}"
+    emptyMessage="Nenhum roadmap foi encontrado"
+    (onPage)="pageChange($event)"
+>
+    <ng-template #list let-roadmaps>
+        <div class="grid grid-cols-12 gap-4 grid-nogutter">
+            <div
+                class="col-span-12"
+                *ngFor="let roadmap of roadmaps; let first = first"
+            >
+                <app-community-roadmaps-line
+                    [roadmap]="roadmap"
+                ></app-community-roadmaps-line>
+            </div>
+        </div>
+    </ng-template>
+</p-dataview>

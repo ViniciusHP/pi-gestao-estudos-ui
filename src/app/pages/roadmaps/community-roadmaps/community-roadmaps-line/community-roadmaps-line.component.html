@@ -1,0 +1,29 @@
+<div
+    class="flex items-center justify-between p-5 border-b border-surface-200 dark:border-surface-300"
+>
+    <div class="flex items-center flex-wrap gap-10">
+        <div class="w-100">
+            <div class="w-100 font-bold">
+                Roadmap: {{ roadmap.id }} - {{ roadmap.subject }}
+            </div>
+            @if (roadmap.createdByUser) {
+            <span class="text-sm">Criado por {{ roadmap.createdByUser }}</span>
+            }
+        </div>
+        <span class="w-50"
+            >Início: {{ roadmap.startDate | date : 'dd/MM/yyyy' }}</span
+        >
+        <span class="w-50"
+            >Fim: {{ roadmap.endDate | date : 'dd/MM/yyyy' }}</span
+        >
+    </div>
+</div>
+<div class="py-5 px-10 grid grid-cols-6">
+    @for (week of roadmap.weeks; track $index; let index = $index) {
+    <app-community-roadmaps-week-line
+        class="col-span-6"
+        [week]="week"
+        [weekNumber]="index + 1"
+    ></app-community-roadmaps-week-line>
+    }
+</div>
