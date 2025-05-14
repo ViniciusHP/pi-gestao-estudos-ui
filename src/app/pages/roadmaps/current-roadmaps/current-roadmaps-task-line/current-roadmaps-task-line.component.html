@@ -1,0 +1,11 @@
+<div class="flex gap-2 items-center pb-3">
+    <p-checkbox
+        class="flex"
+        [(ngModel)]="task.checked"
+        (ngModelChange)="onChange.emit()"
+        [binary]="true"
+    />
+    <p>Atividade {{ taskNumber }}</p>
+</div>
+<p>{{ task.name }}</p>
+<p>{{ task.description }}</p>

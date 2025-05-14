@@ -1,0 +1,41 @@
+<div
+    class="flex items-center justify-between p-5 border-b border-surface-200 dark:border-surface-300"
+>
+    <div class="flex items-center flex-wrap gap-10">
+        <div class="flex gap-2 items-center">
+            <p-checkbox
+                class="flex"
+                [(ngModel)]="week.checked"
+                (ngModelChange)="onChange.emit()"
+                [binary]="true"
+            />
+            <div class="w-100 font-bold">Semana {{ weekNumber }}</div>
+        </div>
+        <span class="w-50"
+            >Início: {{ week.startDate | date : 'dd/MM/yyyy' }}</span
+        >
+        <span class="w-50">Fim: {{ week.endDate | date : 'dd/MM/yyyy' }}</span>
+    </div>
+</div>
+@if (week.activities) {
+<div class="py-5 px-5 grid grid-cols-12 gap-5">
+    @for (activity of week.activities; track $index; let index = $index) {
+    @if(activity.type == typeOptions.ACTIVITY) {
+    <div class="col-span-12">
+        <app-current-roadmaps-task-line
+            [taskNumber]="getTaskCount(index)"
+            [task]="getTaskActivity(activity)"
+            (onChange)="onChange.emit()"
+        />
+    </div>
+    } @else if (activity.type == typeOptions.TEST) {
+    <div class="col-span-12">
+        <app-current-roadmaps-test-line
+            [testNumber]="getTestCount(index)"
+            [test]="getTestActivity(activity)"
+            (onChange)="onChange.emit()"
+        />
+    </div>
+    } }
+</div>
+}

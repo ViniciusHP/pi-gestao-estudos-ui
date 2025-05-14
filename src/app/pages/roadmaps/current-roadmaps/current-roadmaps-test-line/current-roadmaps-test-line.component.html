@@ -1,0 +1,11 @@
+<div class="flex gap-2 items-center pb-3">
+    <p-checkbox
+        class="flex"
+        [(ngModel)]="test.checked"
+        (ngModelChange)="onChange.emit()"
+        [binary]="true"
+    />
+    <p>Avaliação {{ testNumber }}</p>
+</div>
+<p>{{ test.name }} - {{ test.date | date : 'dd/MM/yyyy' }}</p>
+<p>{{ test.description }}</p>
