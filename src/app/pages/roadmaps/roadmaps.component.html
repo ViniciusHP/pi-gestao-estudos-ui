@@ -1,0 +1,26 @@
+<div class="page-container">
+    <app-page-title title="Roadmaps">
+        <ng-template #actions>
+            @if (showNewBtn()) {
+            <a [routerLink]="['new']" class="p-button font-bold"> Novo </a>
+            }
+        </ng-template>
+    </app-page-title>
+
+    <p-tabs [value]="initialTabRoute" [scrollable]="true">
+        <p-tablist>
+            @for(tab of tabs; track tab.route){
+            <p-tab
+                [value]="tab.route"
+                [routerLink]="tab.route"
+                class="flex items-center !gap-2 text-inherit"
+            >
+                <i [class]="tab.icon"></i>
+                <span>{{ tab.label }}</span>
+            </p-tab>
+            }
+        </p-tablist>
+    </p-tabs>
+
+    <router-outlet></router-outlet>
+</div>
