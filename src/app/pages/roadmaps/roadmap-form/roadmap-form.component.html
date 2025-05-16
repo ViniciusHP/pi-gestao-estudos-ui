@@ -1,0 +1,175 @@
+<div class="page-register-container">
+    <div class="relative">
+        @if(requestInProgress()) {
+        <app-page-spinner class="page-spinner" />
+        }
+        <app-page-title [title]="pageTitle()">
+            <ng-template #actions>
+                @if(!isInsertMode()) {
+                <div>
+                    <p-selectbutton
+                        [options]="visibilityOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [formControl]="getFormControl('visibility')"
+                    />
+                </div>
+                }
+            </ng-template>
+        </app-page-title>
+
+        <form
+            class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+            [formGroup]="formGroup"
+        >
+            <div class="col-span-6 sm:col-span-2 xl:col-span-1">
+                <p-floatlabel [variant]="'over'">
+                    <p-datepicker
+                        class="w-full"
+                        inputId="startDate"
+                        formControlName="startDate"
+                        inputStyleClass="w-full"
+                        styleClass="w-full"
+                        dateFormat="dd/mm/yy"
+                        [showIcon]="true"
+                    />
+                    <label for="startDate">Data de início</label>
+                </p-floatlabel>
+
+                @if (errorStateStartDateRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar a data de início das atividades do
+                    roadmap</p-message
+                >
+                }
+            </div>
+
+            <div class="col-span-6 sm:col-span-2 xl:col-span-1">
+                <p-floatlabel [variant]="'over'">
+                    <p-datepicker
+                        class="w-full"
+                        inputId="endDate"
+                        formControlName="endDate"
+                        inputStyleClass="w-full"
+                        styleClass="w-full"
+                        dateFormat="dd/mm/yy"
+                        [showIcon]="true"
+                    />
+                    <label for="endDate">Data de término</label>
+                </p-floatlabel>
+
+                @if (errorStateEndDateRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar a data de término das atividades do
+                    roadmap</p-message
+                >
+                }
+            </div>
+
+            <div class="col-span-6 sm:col-span-3 xl:col-span-2">
+                <p-floatlabel [variant]="'over'">
+                    <p-select
+                        class="w-full p-inputwrapper-filled"
+                        inputId="subject"
+                        [options]="subjects()"
+                        [loading]="loadingSubjects()"
+                        formControlName="subjectId"
+                        optionLabel="name"
+                        optionValue="id"
+                        placeholder="Selecione uma disciplina"
+                        emptyMessage="Nenhum registro encontrado"
+                    />
+
+                    <label for="subject">Disciplina</label>
+                </p-floatlabel>
+
+                @if (errorStatesSubjectRequired.hasError() | async) {
+                <p-message severity="error" variant="simple" size="small"
+                    >É necessário informar a qual disciplina o roadmap é
+                    referente</p-message
+                >
+                }
+            </div>
+
+            @for (weekFormGroup of weeksFormGroups; track $index; let index =
+            $index) {
+            <div class="col-span-6">
+                <app-roadmap-week-form
+                    [weekFormGroup]="weekFormGroup"
+                    [week]="index + 1"
+                    [requestInProgress]="requestInProgress()"
+                    (onAddActivity)="addActivity($event)"
+                    (onAddTest)="addTest($event)"
+                ></app-roadmap-week-form>
+            </div>
+            }
+
+            <div class="flex justify-center items-center col-span-6">
+                <p-button
+                    label="Adicionar semana"
+                    severity="primary"
+                    [loading]="requestInProgress()"
+                    [outlined]="true"
+                    (onClick)="addWeek()"
+                />
+            </div>
+        </form>
+    </div>
+
+    <div class="flex justify-end items-end py-8 sm:pt-8 h-full">
+        @if (isInsertMode()) {
+        <div class="w-full sm:w-auto sm:grid sm:grid-cols-2 sm:gap-x-6">
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Inserir"
+                severity="primary"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="requestInProgress()"
+                [disabled]="disabledInsertBtn()"
+                (onClick)="insert()"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Voltar"
+                severity="primary"
+                [outlined]="true"
+                styleClass="w-full sm:w-auto"
+                (onClick)="navigateToGrid()"
+            />
+        </div>
+        } @else {
+
+        <div class="w-full sm:w-auto sm:grid sm:grid-cols-3 sm:gap-x-6">
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Editar"
+                severity="primary"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="editRequest()"
+                [disabled]="disabledEditBtn()"
+                (onClick)="edit()"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Excluir"
+                severity="danger"
+                styleClass="w-full sm:w-auto mb-6 sm:mb-auto"
+                [loading]="deleteRequest()"
+                [disabled]="disabledDeleteBtn()"
+                (onClick)="delete($event)"
+            />
+
+            <p-button
+                class="grid-col-span-1 w-full sm:w-auto"
+                label="Voltar"
+                severity="primary"
+                [outlined]="true"
+                styleClass="w-full sm:w-auto"
+                (onClick)="navigateToGrid()"
+            />
+        </div>
+        }
+    </div>
+</div>

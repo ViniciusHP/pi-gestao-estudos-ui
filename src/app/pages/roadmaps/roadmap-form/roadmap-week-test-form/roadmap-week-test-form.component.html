@@ -1,0 +1,69 @@
+<div class="p-5 border-b border-surface-200 dark:border-surface-300">
+    <div class="mb-6">Avaliação {{ test }}</div>
+    <form
+        class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+        [formGroup]="testFormGroup"
+    >
+        <div class="col-span-6 sm:col-span-3 xl:col-span-2">
+            <p-floatlabel>
+                <input
+                    pInputText
+                    class="w-full"
+                    [id]="'name-' + test"
+                    type="text"
+                    formControlName="name"
+                    autocomplete="off"
+                />
+                <label [for]="'name-test-' + test">Atividade</label>
+            </p-floatlabel>
+
+            @if (errorStateTestRequired.hasError() | async) {
+            <p-message severity="error" variant="simple" size="small"
+                >É necessário informar o nome da avaliação da semana
+                {{ week }}</p-message
+            >
+            }
+        </div>
+
+        <div class="col-span-6 sm:col-span-3 xl:col-span-2">
+            <p-floatlabel [variant]="'over'">
+                <p-datepicker
+                    class="w-full"
+                    [inputId]="'date-test-' + test"
+                    formControlName="date"
+                    inputStyleClass="w-full"
+                    styleClass="w-full"
+                    dateFormat="dd/mm/yy"
+                    [showIcon]="true"
+                />
+                <label [for]="'date-test-' + test">Data da avaliação</label>
+            </p-floatlabel>
+
+            @if (errorStateDateRequired.hasError() | async) {
+            <p-message severity="error" variant="simple" size="small"
+                >É necessário informar a data da avaliação da semana
+                {{ week }}</p-message
+            >
+            }
+        </div>
+
+        <div class="col-span-6 h-100">
+            <p-floatlabel class="h-full" [variant]="'over'">
+                <textarea
+                    pTextarea
+                    class="w-full h-full p-filled"
+                    [id]="'description-test-' + test"
+                    formControlName="description"
+                >
+                </textarea>
+                <label [for]="'description-test-' + test">Descrição</label>
+            </p-floatlabel>
+
+            @if (errorStateDescriptionRequired.hasError() | async) {
+            <p-message severity="error" variant="simple" size="small"
+                >É necessário informar a descrição da avaliação</p-message
+            >
+            }
+        </div>
+    </form>
+</div>

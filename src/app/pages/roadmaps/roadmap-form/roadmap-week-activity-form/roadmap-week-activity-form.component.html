@@ -1,0 +1,47 @@
+<div class="p-5 border-b border-surface-200 dark:border-surface-300">
+    <div class="mb-6">Atividade {{ activity }}</div>
+    <form
+        class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+        [formGroup]="activityFormGroup"
+    >
+        <div class="col-span-6 sm:col-span-3 xl:col-span-2">
+            <p-floatlabel>
+                <input
+                    pInputText
+                    class="w-full"
+                    [id]="'name-activity-' + activity"
+                    type="text"
+                    formControlName="name"
+                    autocomplete="off"
+                />
+                <label [for]="'name-activity-' + activity">Atividade</label>
+            </p-floatlabel>
+
+            @if (errorStateActivityRequired.hasError() | async) {
+            <p-message severity="error" variant="simple" size="small"
+                >É necessário informar o nome da atividade da semana
+                {{ week }}</p-message
+            >
+            }
+        </div>
+
+        <div class="col-span-6 h-100">
+            <p-floatlabel class="h-full" [variant]="'over'">
+                <textarea
+                    pTextarea
+                    class="w-full h-full p-filled"
+                    [id]="'description-test-' + activity"
+                    formControlName="description"
+                >
+                </textarea>
+                <label [for]="'description-test-' + activity">Descrição</label>
+            </p-floatlabel>
+
+            @if (errorStateDescriptionRequired.hasError() | async) {
+            <p-message severity="error" variant="simple" size="small"
+                >É necessário informar a descrição da atividade</p-message
+            >
+            }
+        </div>
+    </form>
+</div>

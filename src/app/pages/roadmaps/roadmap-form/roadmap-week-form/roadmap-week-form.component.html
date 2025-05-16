@@ -1,0 +1,96 @@
+<div class="p-5 border-b border-surface-200 dark:border-surface-300">
+    <div class="mb-6">Semana {{ week }}</div>
+    <form
+        class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+        [formGroup]="weekFormGroup"
+    >
+        <div class="col-span-6 sm:col-span-2 xl:col-span-1">
+            <p-floatlabel [variant]="'over'">
+                <p-datepicker
+                    class="w-full"
+                    inputId="startDate"
+                    formControlName="startDate"
+                    inputStyleClass="w-full"
+                    styleClass="w-full"
+                    dateFormat="dd/mm/yy"
+                    [showIcon]="true"
+                />
+                <label for="startDate">Data de início</label>
+            </p-floatlabel>
+
+            @if (errorStateStartDateRequired.hasError() | async) {
+            <p-message severity="error" variant="simple" size="small"
+                >É necessário informar a data de início das atividades da semana
+                {{ week }}</p-message
+            >
+            }
+        </div>
+
+        <div class="col-span-6 sm:col-span-2 xl:col-span-1">
+            <p-floatlabel [variant]="'over'">
+                <p-datepicker
+                    class="w-full"
+                    inputId="endDate"
+                    formControlName="endDate"
+                    inputStyleClass="w-full"
+                    styleClass="w-full"
+                    dateFormat="dd/mm/yy"
+                    [showIcon]="true"
+                />
+                <label for="endDate">Data de término</label>
+            </p-floatlabel>
+
+            @if (errorStateEndDateRequired.hasError() | async) {
+            <p-message severity="error" variant="simple" size="small"
+                >É necessário informar a data de término das atividades da
+                semana {{ week }}</p-message
+            >
+            }
+        </div>
+
+        <div
+            class="col-span-6 border-b border-surface-200 dark:border-surface-300"
+        ></div>
+        @for (activityFormGroup of activitiesFormGroup; track $index; let index
+        = $index) {
+        <div class="col-span-6">
+            @if(activityFormGroup?.get('type')?.value == typeOptions.ACTIVITY) {
+            <app-roadmap-week-activity-form
+                [week]="week"
+                [activity]="getTaskCount(index)"
+                [activityFormGroup]="activityFormGroup"
+            ></app-roadmap-week-activity-form>
+            } @else if (activityFormGroup?.get('type')?.value ==
+            typeOptions.TEST) {
+            <app-roadmap-week-test-form
+                [week]="week"
+                [test]="getTestCount(index)"
+                [testFormGroup]="activityFormGroup"
+            ></app-roadmap-week-test-form>
+            }
+        </div>
+        }
+
+        <div class="col-span-6 flex justify-center flex-col sm:flex-row gap-6">
+            <p-button
+                label="Adicionar atividade"
+                severity="primary"
+                styleClass="w-full sm:w-auto sm:mb-auto"
+                [loading]="requestInProgress"
+                [disabled]="requestInProgress"
+                [outlined]="true"
+                (onClick)="addActivity()"
+            />
+
+            <p-button
+                label="Adicionar avaliação"
+                severity="primary"
+                styleClass="w-full sm:w-auto sm:mb-auto"
+                [loading]="requestInProgress"
+                [disabled]="requestInProgress"
+                [outlined]="true"
+                (onClick)="addTest()"
+            />
+        </div>
+    </form>
+</div>
