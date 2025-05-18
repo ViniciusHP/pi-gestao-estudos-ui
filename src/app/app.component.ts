@@ -1,15 +1,84 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import {
+    NavigationEnd,
+    Router,
+    RouterModule,
+    RouterOutlet,
+} from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { Drawer, DrawerModule } from 'primeng/drawer';
 import { ToastModule } from 'primeng/toast';
+
+interface MenuItem {
+    name: string;
+    link: string;
+    icon?: string;
+}
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, ButtonModule, ConfirmPopupModule, ToastModule],
+    imports: [
+        RouterOutlet,
+        CommonModule,
+        RouterModule,
+        ButtonModule,
+        DrawerModule,
+        ConfirmPopupModule,
+        ToastModule,
+    ],
     providers: [MessageService, ConfirmationService],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+    @ViewChild('drawerRef')
+    drawerRef!: Drawer;
+
+    protected visible: boolean = false;
+    protected showSidenavBtn = signal(false);
+
+    protected menu: Array<MenuItem> = [
+        {
+            name: 'Usuários',
+            link: '/users',
+            icon: 'pi pi-users',
+        },
+        {
+            name: 'Disciplinas',
+            link: '/subjects',
+            icon: 'pi pi-bookmark-fill',
+        },
+        {
+            name: 'Solicitações',
+            link: '/content-requests',
+            icon: 'pi pi-list',
+        },
+        {
+            name: 'Roadmaps',
+            link: '/roadmaps',
+            icon: 'pi pi-map',
+        },
+    ];
+
+    constructor(private _router: Router) {}
+
+    ngOnInit(): void {
+        this._router.events.subscribe((e) => {
+            if (e instanceof NavigationEnd) {
+                this.visible = false;
+                console.log(e.url);
+
+                console.log(!e.url.includes('/login'));
+
+                this.showSidenavBtn.set(!e.url.includes('/login'));
+            }
+        });
+    }
+
+    protected closeCallback(e: Event): void {
+        this.drawerRef.close(e);
+    }
+}

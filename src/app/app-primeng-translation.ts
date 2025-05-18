@@ -1,0 +1,36 @@
+import { Translation } from 'primeng/api';
+
+export const appTranslation: Translation = {
+    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    monthNames: [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro',
+    ],
+    monthNamesShort: [
+        'Jan',
+        'Fev',
+        'Mar',
+        'Abr',
+        'Maio',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Set',
+        'Out',
+        'Nov',
+        'Dez',
+    ],
+    emptySearchMessage: 'Nenhum registro foi encontrado',
+    emptyFilterMessage: 'Nenhum registro foi encontrado',
+};

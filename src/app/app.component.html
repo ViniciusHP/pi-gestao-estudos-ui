@@ -1,4 +1,54 @@
 <p-confirmpopup />
 <p-toast />
 
+<div class="flex justify-start">
+    <p-drawer #drawerRef [(visible)]="visible">
+        <ng-template #headless>
+            <div class="flex flex-col h-full">
+                <div
+                    class="flex items-center justify-between px-6 pt-4 shrink-0"
+                >
+                    <span class="inline-flex items-center gap-2">
+                        <span class="font-semibold text-2xl text-primary"
+                            >Gestão de estudos</span
+                        >
+                    </span>
+                    <span>
+                        <p-button
+                            type="button"
+                            (click)="closeCallback($event)"
+                            icon="pi pi-times"
+                            rounded="true"
+                            outlined="true"
+                            styleClass="h-8 w-8"
+                        ></p-button>
+                    </span>
+                </div>
+                <div class="overflow-y-auto">
+                    <ul class="list-none m-5 overflow-hidden">
+                        @for (item of menu; track $index) {
+                        <li class="mb-5">
+                            <a
+                                pRipple
+                                class="p-button w-full flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple"
+                                [routerLink]="item.link"
+                            >
+                                <i class="mr-2" [ngClass]="item.icon"></i>
+                                <span class="font-medium">{{ item.name }}</span>
+                            </a>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </ng-template>
+    </p-drawer>
+    <p-button
+        *ngIf="showSidenavBtn()"
+        class="m-5"
+        (click)="visible = true"
+        icon="pi pi-bars"
+    />
+</div>
+
 <router-outlet></router-outlet>

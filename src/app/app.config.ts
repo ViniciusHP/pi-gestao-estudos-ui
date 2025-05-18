@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 
 import { provideHttpClient } from '@angular/common/http';
+import { appTranslation } from './app-primeng-translation';
 import { applicationTheme } from './app-theme';
 import { routes } from './app.routes';
 
@@ -20,6 +21,7 @@ export const appConfig: ApplicationConfig = {
                     darkModeSelector: false || 'none',
                 },
             },
+            translation: appTranslation,
         }),
     ],
 };
