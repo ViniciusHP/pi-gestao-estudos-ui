@@ -69,16 +69,19 @@ export class AppComponent implements OnInit {
         this._router.events.subscribe((e) => {
             if (e instanceof NavigationEnd) {
                 this.visible = false;
-                console.log(e.url);
 
-                console.log(!e.url.includes('/login'));
-
-                this.showSidenavBtn.set(!e.url.includes('/login'));
+                this.showSidenavBtn.set(
+                    !e.urlAfterRedirects.includes('/login')
+                );
             }
         });
     }
 
     protected closeCallback(e: Event): void {
         this.drawerRef.close(e);
+    }
+
+    protected disconect(): void {
+        this._router.navigate(['/login']);
     }
 }

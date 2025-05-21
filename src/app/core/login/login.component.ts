@@ -6,6 +6,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormErrorState } from '../../shared/helpers';
 import { BrowserTabTitleService } from '../../shared/services';
 import { LoginService } from '../services/login.service';
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
         private _fb: FormBuilder,
         private _dr: DestroyRef,
         private _loginService: LoginService,
-        private _browserTabTitleService: BrowserTabTitleService
+        private _browserTabTitleService: BrowserTabTitleService,
+        private _router: Router
     ) {}
 
     ngOnInit(): void {
@@ -45,7 +47,9 @@ export class LoginComponent implements OnInit {
                 email: this.formGroup.get('email')?.value,
                 password: this.formGroup.get('password')?.value,
             })
-            .subscribe();
+            .subscribe(() => {
+                this._router.navigate(['/roadmaps/current-roadmaps']);
+            });
     }
 
     private _initializePage(): void {

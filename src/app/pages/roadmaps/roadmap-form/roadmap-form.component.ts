@@ -27,7 +27,6 @@ import {
     RoadmapActivityType,
     RoadmapAddActivityEvent,
     RoadmapAddTestEvent,
-    RoadmapForm,
     RoadmapModel,
     RoadmapTaskForm,
     RoadmapTestForm,
@@ -421,13 +420,6 @@ export class RoadmapFormComponent implements OnInit {
             .pipe(takeUntilDestroyed(this._dr))
             .subscribe(() => {
                 this.formInvalid.set(this.formGroup.invalid);
-
-                console.log(
-                    this.roadmapModelMapper.convertFormToModel(
-                        this.formGroup.getRawValue() as RoadmapForm,
-                        this.subjects()
-                    )
-                );
             });
     }
 
