@@ -1,12 +1,15 @@
 import {
     Component,
     DestroyRef,
+    EventEmitter,
     Input,
     OnChanges,
+    Output,
     SimpleChanges,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormErrorState } from '../../../../shared/helpers';
+import { RoadmapRemoveActivityEvent } from '../../models';
 
 @Component({
     selector: 'app-roadmap-week-activity-form',
@@ -24,6 +27,12 @@ export class RoadmapWeekActivityFormComponent implements OnChanges {
     @Input()
     activityFormGroup!: FormGroup;
 
+    @Input()
+    requestInProgress!: boolean;
+
+    @Output()
+    onRemoveActivity = new EventEmitter<RoadmapRemoveActivityEvent>();
+
     protected errorStateActivityRequired!: FormErrorState;
     protected errorStateDescriptionRequired!: FormErrorState;
 
@@ -33,6 +42,13 @@ export class RoadmapWeekActivityFormComponent implements OnChanges {
         if ('activityFormGroup' in changes) {
             this._initializeErrorState();
         }
+    }
+
+    protected removeActivity(): void {
+        this.onRemoveActivity.emit({
+            week: this.week,
+            activity: this.activity,
+        });
     }
 
     private _initializeErrorState(): void {

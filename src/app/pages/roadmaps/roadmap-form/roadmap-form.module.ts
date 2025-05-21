@@ -8,6 +8,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
@@ -36,6 +37,7 @@ import { RoadmapWeekTestFormComponent } from './roadmap-week-test-form/roadmap-w
         SelectModule,
         InputTextModule,
         TextareaModule,
+        TooltipModule,
 
         SharedModule,
     ],

@@ -2,6 +2,8 @@ export * from './current-roadmap.model';
 export * from './roadmap-activity-type';
 export * from './roadmap-add-activity-event';
 export * from './roadmap-add-test-event';
+export * from './roadmap-remove-activity-event';
+export * from './roadmap-remove-week-event';
 export * from './roadmap-visibility-type';
 export * from './roadmap.form';
 export * from './roadmap.model';

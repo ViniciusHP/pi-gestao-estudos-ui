@@ -1,5 +1,19 @@
 <div class="p-5 border-b border-surface-200 dark:border-surface-300">
-    <div class="mb-6">Semana {{ week }}</div>
+    <div class="mb-6 flex justify-between">
+        <span>Semana {{ week }} </span>
+        <p-button
+            severity="danger"
+            styleClass="w-full sm:w-auto sm:mb-auto"
+            [loading]="requestInProgress"
+            [disabled]="requestInProgress"
+            [outlined]="true"
+            [pTooltip]="'Remover semana ' + week"
+            tooltipPosition="left"
+            (onClick)="removeWeek()"
+        >
+            <span class="pi pi-trash"></span>
+        </p-button>
+    </div>
     <form
         class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
         [formGroup]="weekFormGroup"
@@ -58,14 +72,18 @@
             <app-roadmap-week-activity-form
                 [week]="week"
                 [activity]="getTaskCount(index)"
+                [requestInProgress]="requestInProgress"
                 [activityFormGroup]="activityFormGroup"
+                (onRemoveActivity)="removeActivity($event)"
             ></app-roadmap-week-activity-form>
             } @else if (activityFormGroup?.get('type')?.value ==
             typeOptions.TEST) {
             <app-roadmap-week-test-form
                 [week]="week"
                 [test]="getTestCount(index)"
+                [requestInProgress]="requestInProgress"
                 [testFormGroup]="activityFormGroup"
+                (onRemoveTest)="removeActivity($event)"
             ></app-roadmap-week-test-form>
             }
         </div>

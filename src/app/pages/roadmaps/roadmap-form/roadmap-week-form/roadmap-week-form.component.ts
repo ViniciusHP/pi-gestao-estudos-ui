@@ -13,6 +13,8 @@ import {
     RoadmapActivityType,
     RoadmapAddActivityEvent,
     RoadmapAddTestEvent,
+    RoadmapRemoveActivityEvent,
+    RoadmapRemoveWeekEvent,
 } from '../../models';
 
 @Component({
@@ -36,6 +38,12 @@ export class RoadmapWeekFormComponent implements OnChanges {
 
     @Output()
     onAddTest = new EventEmitter<RoadmapAddTestEvent>();
+
+    @Output()
+    onRemoveWeek = new EventEmitter<RoadmapRemoveWeekEvent>();
+
+    @Output()
+    onRemoveActivity = new EventEmitter<RoadmapRemoveActivityEvent>();
 
     protected tasks = 0;
     protected tests = 0;
@@ -64,6 +72,16 @@ export class RoadmapWeekFormComponent implements OnChanges {
         this.onAddTest.emit({
             week: this.week,
         });
+    }
+
+    protected removeWeek(): void {
+        this.onRemoveWeek.emit({
+            week: this.week,
+        });
+    }
+
+    protected removeActivity(event: RoadmapRemoveActivityEvent): void {
+        this.onRemoveActivity.emit(event);
     }
 
     protected getTaskCount(index: number): number {

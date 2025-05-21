@@ -28,6 +28,8 @@ import {
     RoadmapAddActivityEvent,
     RoadmapAddTestEvent,
     RoadmapModel,
+    RoadmapRemoveActivityEvent,
+    RoadmapRemoveWeekEvent,
     RoadmapTaskForm,
     RoadmapTestForm,
     RoadmapVisibilityType,
@@ -184,6 +186,19 @@ export class RoadmapFormComponent implements OnInit {
         const testForm = this._createFormTest();
         const formActivities = weekForm.get('activities') as FormArray;
         formActivities.push(testForm);
+    }
+
+    protected removeWeek(event: RoadmapRemoveWeekEvent): void {
+        this.weeksFormArray.removeAt(event.week - 1);
+    }
+
+    protected removeActivity(event: RoadmapRemoveActivityEvent): void {
+        const week = event.week - 1;
+        const activity = event.activity - 1;
+        const weekForm = this.weeksFormArray.at(week) as FormGroup;
+
+        const formActivities = weekForm.get('activities') as FormArray;
+        formActivities.removeAt(activity);
     }
 
     private _loadSubjects(): void {

@@ -1,12 +1,15 @@
 import {
     Component,
     DestroyRef,
+    EventEmitter,
     Input,
     OnChanges,
+    Output,
     SimpleChanges,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormErrorState } from '../../../../shared/helpers';
+import { RoadmapRemoveActivityEvent } from '../../models';
 
 @Component({
     selector: 'app-roadmap-week-test-form',
@@ -24,6 +27,12 @@ export class RoadmapWeekTestFormComponent implements OnChanges {
     @Input()
     testFormGroup!: FormGroup;
 
+    @Input()
+    requestInProgress!: boolean;
+
+    @Output()
+    onRemoveTest = new EventEmitter<RoadmapRemoveActivityEvent>();
+
     protected errorStateTestRequired!: FormErrorState;
     protected errorStateDescriptionRequired!: FormErrorState;
     protected errorStateDateRequired!: FormErrorState;
@@ -34,6 +43,13 @@ export class RoadmapWeekTestFormComponent implements OnChanges {
         if ('testFormGroup' in changes) {
             this._initializeErrorState();
         }
+    }
+
+    protected removeTest(): void {
+        this.onRemoveTest.emit({
+            week: this.week,
+            activity: this.test,
+        });
     }
 
     private _initializeErrorState(): void {
