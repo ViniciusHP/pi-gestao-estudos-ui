@@ -2,7 +2,7 @@
   Gestão de estudos UI
 </h1>
 
-<h4 align="center">Status: 🚧 Em andamento</h4>
+<h4 align="center">Status: ✔ Concluído</h4>
 
 ---
 
